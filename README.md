@@ -1,1 +1,1 @@
-# hackaton
+# CFEngine Hackaton
