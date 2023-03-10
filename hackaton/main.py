@@ -2,7 +2,6 @@ import logging as log
 from arguments import parse_args
 
 
-
 def main():
     args = parse_args()
     log.basicConfig(

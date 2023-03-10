@@ -19,9 +19,5 @@ setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 3.8",
     ],
-    entry_points={
-        "console_scripts": [
-            "hackaton = hackaton.main:main"
-        ]
-    }
+    entry_points={"console_scripts": ["hackaton = hackaton.main:main"]},
 )

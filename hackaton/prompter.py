@@ -1,6 +1,7 @@
 from unicurses import *
 import string
 
+
 def select(prompt, choices):
     stdscr = initscr()
     clear()
@@ -17,7 +18,9 @@ def select(prompt, choices):
 
     while True:
         clear()
-        mvaddstr(0, 0, "? %s %s [Use arrows to move, type to filter]" % (prompt, filter))
+        mvaddstr(
+            0, 0, "? %s %s [Use arrows to move, type to filter]" % (prompt, filter)
+        )
         for i in range(len(filtered)):
             if highlight == i:
                 attron(A_REVERSE)
