@@ -1,5 +1,5 @@
 import prompter
 
-def select(question, choices):
-    selected = prompter.select(question, choices)
-    print("You selected %s" % selected)
+def select(prompt, choices):
+    selected = prompter.select(prompt, choices)
+    print("You selected '%s'!" % selected)

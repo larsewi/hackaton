@@ -11,9 +11,9 @@ def parse_args():
 
     subparsers = parser.add_subparsers(title="examples")
 
-    select = subparsers.add_parser("select", help="select prompt example")
-    select.add_argument("--question", default="How are you?", help="question to be prompted")
-    select.add_argument("--choices", default=["Not good", "OK", "Very good"], nargs="+", help="choices to select from")
-    select.set_defaults(func=lambda args: examples.select(args.question, args.choices))
+    select = subparsers.add_parser("select", help="selection prompt example")
+    select.add_argument("--prompt", default="What's the greatest programming language?", help="selection prompt")
+    select.add_argument("--choices", default=["Python", "JavaScipt", "Java", "C#", "C", "C++", "Go", "R", "Swift", "PHP"], nargs="+", help="choices to select from")
+    select.set_defaults(func=lambda args: examples.select(args.prompt, args.choices))
 
     return parser.parse_args()
