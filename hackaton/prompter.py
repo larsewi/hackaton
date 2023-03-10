@@ -17,6 +17,7 @@ def select(prompt, choices):
     choice = None
 
     while True:
+        # Draw
         clear()
         mvaddstr(
             0, 0, "? %s %s [Use arrows to move, type to filter]" % (prompt, filter)
@@ -30,6 +31,7 @@ def select(prompt, choices):
                 mvaddstr(i + 1, 0, "  %s" % filtered[i])
         refresh()
 
+        # Handle input / update
         ch = getch()
         if ch == KEY_UP and len(filtered) > 0:
             highlight = (highlight - 1) % len(filtered)
