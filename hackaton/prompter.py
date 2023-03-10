@@ -1,7 +1,7 @@
 from unicurses import *
 import string
 
-BACKSPACE = 127
+KEY_CODE_DEL = 127
 KEY_CODE_ENT = 10
 KEY_CODE_EOF = 4
 KEY_CODE_ESC = 27
@@ -50,9 +50,9 @@ def select(prompt, choices):
         elif ch in (KEY_CODE_ESC, KEY_CODE_EOF, KEY_LEFT):
             # Cancel selection
             break
-        elif chr(ch) in string.printable or ch == 127:
+        elif chr(ch) in string.printable or ch == KEY_CODE_DEL:
             # Filter results
-            filter = filter[:-1] if ch == 127 else filter + chr(ch)
+            filter = filter[:-1] if ch == KEY_CODE_DEL else filter + chr(ch)
             highlight = 0
             filtered = [c for c in choices if c.lower().startswith(filter.lower())]
 
