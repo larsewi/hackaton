@@ -6,6 +6,7 @@ KEY_CODE_ENT = 10
 KEY_CODE_EOF = 4
 KEY_CODE_ESC = 27
 
+
 def select(prompt, choices):
     stdscr = initscr()
     noecho()
