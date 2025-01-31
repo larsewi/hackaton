@@ -54,7 +54,9 @@ order they appear.
 
 The `"expression"` field is passed to `eval()` along with the [context
 dictionary](#context-dictionary). The outcome of `eval() determines whether or
-not the dependency will be built.
+not the dependency will be built. The `"expression"` field is optional and will
+be interpreted as the expression `any` (which is always true) unless something
+else is specified.
 
 The packages are fetched by concatenating the `"source"` and the `"tarball"`
 field and will be stored in the `build/tarballs` directory.

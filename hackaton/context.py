@@ -55,6 +55,8 @@ def get_context(args):
     ctx["aix"] = False
     log.debug('Setting context "hpux" to False')
     ctx["hpux"] = False
+    log.debug('Setting context "redhat" to False')
+    ctx["redhat"] = False
 
     return ctx
 
