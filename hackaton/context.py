@@ -45,4 +45,18 @@ def get_context(args):
         assert False, f"Illegal role argument (--role={args.role})"
     assert ctx["agent"] != ctx["hub"], 'Context cannot have both "agent" and "hub"'
 
+    log.debug('Setting context "debian" to True')
+    ctx["debian"] = True
+    log.debug('Setting context "windows" to False')
+    ctx["windows"] = False
+    log.debug('Setting context "solaris" to False')
+    ctx["solaris"] = False
+    log.debug('Setting context "aix" to False')
+    ctx["aix"] = False
+    log.debug('Setting context "hpux" to False')
+    ctx["hpux"] = False
+
     return ctx
+
+def check_context(ctx, expression):
+    return eval(expression, ctx)

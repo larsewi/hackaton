@@ -7,8 +7,6 @@ def parse_args():
         action='store_true',
         help="enable debug log messages",
     )
-
-    # Will enable debug symbols
     parser.add_argument(
         "--build-type",
         default="debug",

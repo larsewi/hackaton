@@ -3,29 +3,25 @@
         "version": "2.4.62",
         "source": "http://archive.apache.org/dist/httpd/",
         "tarball": "httpd-2.4.62.tar.gz",
-        "checksum": "3e2404d762a2da03560d7ada379ba1599d32f04a0d70ad6ff86f44325f2f062d",
-        "expression": "any"
+        "checksum": "3e2404d762a2da03560d7ada379ba1599d32f04a0d70ad6ff86f44325f2f062d"
     },
     "libacl": {
         "version": "2.3.2",
         "source": "http://nongnu.uib.no/acl/",
         "tarball": "acl-2.3.2.tar.gz",
-        "checksum": "5f2bdbad629707aa7d85c623f994aa8a1d2dec55a73de5205bac0bf6058a2f7c",
-        "expression": "any"
+        "checksum": "5f2bdbad629707aa7d85c623f994aa8a1d2dec55a73de5205bac0bf6058a2f7c"
     },
     "libattr": {
         "version": "2.5.2",
         "source": "https://download-mirror.savannah.gnu.org/releases/attr/",
         "tarball": "attr-2.5.2.tar.gz",
-        "checksum": "39bf67452fa41d0948c2197601053f48b3d78a029389734332a6309a680c6c87",
-        "expression": "any"
+        "checksum": "39bf67452fa41d0948c2197601053f48b3d78a029389734332a6309a680c6c87"
     },
     "libcurl": {
         "version": "8.11.1",
         "source": "https://curl.haxx.se/download/",
         "tarball": "curl-8.11.1.tar.gz",
-        "checksum": "a889ac9dbba3644271bd9d1302b5c22a088893719b72be3487bc3d401e5c4e80",
-        "expression": "any"
+        "checksum": "a889ac9dbba3644271bd9d1302b5c22a088893719b72be3487bc3d401e5c4e80"
     },
     "libgnurx": {
         "version": "2.5.1",
@@ -38,50 +34,44 @@
         "version": "1.17",
         "source": "http://ftp.gnu.org/pub/gnu/libiconv/",
         "tarball": "libiconv-1.17.tar.gz",
-        "checksum": "8f74213b56238c85a50a5329f77e06198771e70dd9a739779f4c02f65d971313",
-        "expression": "any"
+        "checksum": "8f74213b56238c85a50a5329f77e06198771e70dd9a739779f4c02f65d971313"
     },
     "libxml2": {
         "version": "2.13.5",
         "source": "https://download.gnome.org/sources/libxml2/2.13/",
         "tarball": "libxml2-2.13.5.tar.xz",
-        "checksum": "74fc163217a3964257d3be39af943e08861263c4231f9ef5b496b6f6d4c7b2b6",
-        "expression": "any"
+        "checksum": "74fc163217a3964257d3be39af943e08861263c4231f9ef5b496b6f6d4c7b2b6"
     },
     "libyaml": {
         "version": "0.2.5",
         "source": "http://pyyaml.org/download/libyaml/",
         "tarball": "yaml-0.2.5.tar.gz",
-        "checksum": "c642ae9b75fee120b2d96c712538bd2cf283228d2337df2cf2988e3c02678ef4",
-        "expression": "any"
+        "checksum": "c642ae9b75fee120b2d96c712538bd2cf283228d2337df2cf2988e3c02678ef4"
     },
     "LMDB": {
         "version": "0.9.33",
         "source": "https://git.openldap.org/openldap/openldap/-/archive/LMDB_0.9.33/",
         "tarball": "openldap-LMDB_0.9.33.tar.gz",
-        "checksum": "476801f5239c88c7de61c3390502a5d13965ecedef80105b5fb0fcb8373d1e53",
-        "expression": "any"
+        "checksum": "476801f5239c88c7de61c3390502a5d13965ecedef80105b5fb0fcb8373d1e53"
     },
     "OpenLDAP": {
         "version": "2.6.9",
         "source": "https://openldap.org/software/download/OpenLDAP/openldap-release/",
         "tarball": "openldap-2.6.9.tgz",
         "checksum": "2cb7dc73e9c8340dff0d99357fbaa578abf30cc6619f0521972c555681e6b2ff",
-        "expression": "enterprise agent"
+        "expression": "enterprise and agent"
     },
     "OpenSSL": {
         "version": "3.4.0",
         "source": "https://github.com/openssl/openssl/releases/download/openssl-3.4.0/",
         "tarball": "openssl-3.4.0.tar.gz",
-        "checksum": "e15dda82fe2fe8139dc2ac21a36d4ca01d5313c75f99f46c4e8a27709b7294bf",
-        "expression": "any"
+        "checksum": "e15dda82fe2fe8139dc2ac21a36d4ca01d5313c75f99f46c4e8a27709b7294bf"
     },
     "PCRE2": {
         "version": "10.44",
         "source": "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.44/",
         "tarball": "pcre2-10.44.tar.gz",
-        "checksum": "86b9cb0aa3bcb7994faa88018292bc704cdbb708e785f7c74352ff6ea7d3175b",
-        "expression": "any"
+        "checksum": "86b9cb0aa3bcb7994faa88018292bc704cdbb708e785f7c74352ff6ea7d3175b"
     },
     "pthreads-w32": {
         "version": "2-9-1",
@@ -94,22 +84,19 @@
         "version": "2.1.28",
         "source": "https://github.com/cyrusimap/cyrus-sasl/releases/download/cyrus-sasl-2.1.28/",
         "tarball": "cyrus-sasl-2.1.28.tar.gz",
-        "checksum": "7ccfc6abd01ed67c1a0924b353e526f1b766b21f42d4562ee635a8ebfc5bb38c",
-        "expression": "solaris and enterprise and agent"
+        "checksum": "7ccfc6abd01ed67c1a0924b353e526f1b766b21f42d4562ee635a8ebfc5bb38c"
     },
     "zlib": {
         "version": "1.3.1",
         "source": "https://zlib.net/fossils/",
         "tarball": "zlib-1.3.1.tar.gz",
-        "checksum": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23",
-        "expression": "any"
+        "checksum": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23"
     },
     "librsync": {
         "version": "2.3.4",
         "source": "https://github.com/librsync/librsync/releases/download/v2.3.4/",
         "tarball": "librsync-2.3.4.tar.gz",
-        "checksum": "a0dedf9fff66d8e29e7c25d23c1f42beda2089fb4eac1b36e6acd8a29edfbd1f",
-        "expression": "any"
+        "checksum": "a0dedf9fff66d8e29e7c25d23c1f42beda2089fb4eac1b36e6acd8a29edfbd1f"
     },
     "leech": {
         "version": "0.1.22",
