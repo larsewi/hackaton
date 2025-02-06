@@ -1,9 +1,13 @@
 # CFEngine Hackaton
 
-To build debian packages you need:
-- build-essential
-- devscripts
-- debhelper
+## Prerequisites
+
+You need the following package to run the script. In the future we will build in
+a container so that all you need is podman.
+
+```
+sudo apt install build-essential devscripts debhelper
+```
 
 ## Roadmap
 - Support platforms other than only Debian. This will require adding a
@@ -52,6 +56,10 @@ Dependencies to be packaged with CFEngine are listed in
 [deps-packaging.json](deps-packaging.json). The packages will be built in the
 order they appear.
 
+The key of each entry should contain the package names. The package name must
+consist only of lower case letters ( a-z ), digits ( 0-9 ), plus ( + ) and minus
+( - ) signs, and periods ( . ).
+
 The `"expression"` field is passed to `eval()` along with the [context
 dictionary](#context-dictionary). The outcome of `eval() determines whether or
 not the dependency will be built. The `"expression"` field is optional and will
@@ -59,7 +67,7 @@ be interpreted as the expression `any` (which is always true) unless something
 else is specified.
 
 The packages are fetched by concatenating the `"source"` and the `"tarball"`
-field and will be stored in the `build/tarballs` directory.
+field and will be stored in the `cache/tarballs` directory.
 
 The fetched tarball is computed into a SHA-256 digest which is compared to the
 `"checksum"` field to ensure integrity.
