@@ -1,7 +1,9 @@
+import json
 import logging as log
 
+
 def get_context(args):
-    ctx = { "any": True }
+    ctx = {"any": True}
 
     if args.build_type == "debug":
         log.debug('Setting context "debug" to True')
@@ -15,7 +17,9 @@ def get_context(args):
         ctx["release"] = True
     else:
         assert False, f"Illegal build type argument (--build-type={args.build_type})"
-    assert ctx["release"] != ctx["debug"], 'Context cannot have both "debug" and "release"'
+    assert (
+        ctx["release"] != ctx["debug"]
+    ), 'Context cannot have both "debug" and "release"'
 
     if args.project == "community":
         log.debug('Setting context "community" to True')
@@ -29,7 +33,9 @@ def get_context(args):
         ctx["enterprise"] = True
     else:
         assert False, f"Illegal project argument (--project={args.project})"
-    assert ctx["community"] != ctx["enterprise"], 'Context cannot have both "community" and "enterprise"'
+    assert (
+        ctx["community"] != ctx["enterprise"]
+    ), 'Context cannot have both "community" and "enterprise"'
 
     if args.role == "agent":
         log.debug('Setting context "agent" to True')
@@ -58,7 +64,10 @@ def get_context(args):
     log.debug('Setting context "redhat" to False')
     ctx["redhat"] = False
 
+    log.info(f"Current context:\n{json.dumps(ctx, indent=2)}")
+
     return ctx
+
 
 def check_context(ctx, expression):
     return eval(expression, ctx)

@@ -1,10 +1,11 @@
 import argparse
 
+
 def parse_args():
     parser = argparse.ArgumentParser(description="CFEngine Hackaton")
     parser.add_argument(
         "--debug",
-        action='store_true',
+        action="store_true",
         help="enable debug log messages",
     )
     parser.add_argument(
