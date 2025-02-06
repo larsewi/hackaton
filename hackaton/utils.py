@@ -1,2 +1,2 @@
-def get_build_dir():
-    return "build"
+def get_cache_dir():
+    return "cache"

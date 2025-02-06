@@ -5,17 +5,17 @@ import hashlib
 import tarfile
 import logging as log
 import urllib.request
-from utils import get_build_dir
+from utils import get_cache_dir
 from context import check_context
 
 
 def get_tarballs_dir():
-    build_dir = get_build_dir()
+    build_dir = get_cache_dir()
     return os.path.join(build_dir, "tarballs")
 
 
 def get_sources_dir():
-    build_dir = get_build_dir()
+    build_dir = get_cache_dir()
     return os.path.join(build_dir, "sources")
 
 
