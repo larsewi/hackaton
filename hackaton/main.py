@@ -1,7 +1,7 @@
 import logging as log
 from args import parse_args
 from context import get_context
-from deps_packaging import package_dependencies
+from hackaton.deps_pkging import package_dependencies
 
 
 def main():

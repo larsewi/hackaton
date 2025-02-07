@@ -9,7 +9,7 @@ from hackaton.tarballs import (
     extract_tarball,
     verify_tarball,
 )
-from hackaton.debian_packaging import prepare_debian_dir, get_target_dir
+from hackaton.deb_pkging import prepare_debian_dir, get_target_dir
 
 
 def package_dependencies(ctx):
