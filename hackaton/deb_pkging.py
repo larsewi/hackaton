@@ -185,16 +185,13 @@ def build_debian_package(pkg_name, pkg_version):
     log_file = os.path.join(sources_dir, f"cfbuild-{pkg_name}-debuild.log")
 
     log.info(
-        f"Patience my friend: Building debian package for target '{target_dir}' ..."
+        f"Building debian package for target '{target_dir}' ..."
     )
     with open(log_file, "w") as f:
         res = subprocess.run(
-            ["debuild", "-us", "-uc"], cwd=target_dir, stdout=f, stderr=f
+            ["debuild", "-us", "-uc"], cwd=target_dir, stdout=subprocess.DEVNULL, stderr=f
         )
     if res.returncode != 0:
-        log.error(
-            f"Failed to build package for target '{target_dir}': See '{log_file}' for logs"
-        )
         exit(1)
 
 
