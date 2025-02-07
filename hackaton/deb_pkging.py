@@ -1,4 +1,5 @@
 import os
+import subprocess
 import logging as log
 from datetime import datetime as dt
 
@@ -16,8 +17,11 @@ def get_debian_dir(target_dir):
 
 
 def clean_debian_dir(debian_dir):
+    """Some repositories provide their own debian directory and we don't want to
+    use that."""
+
     log.info(f"Cleaning debian directory '{debian_dir}'")
-    for root, dirs, files in os.walk(debian_dir):
+    for root, dirs, files in os.walk(debian_dir, topdown=False):
         for file in files:
             path = os.path.join(root, file)
             log.debug(f"Deleting file '{path}'")
@@ -37,22 +41,24 @@ def create_debian_changelog(pkg_name: str, pkg_version: str):
 
     target_dir = get_target_dir(pkg_name, pkg_version)
     debian_dir = get_debian_dir(target_dir)
-    changelog = os.path.join(debian_dir, "changelog")
+    changelog_file = os.path.join(debian_dir, "changelog")
 
     now = dt.now().astimezone().strftime("%a, %d %b %Y %H:%M:%S %z")
 
-    with open(changelog, "w") as f:
+    with open(changelog_file, "w") as f:
         print(
-            f"cfbuild-{pkg_name.lower()} ({pkg_version}-1) UNRELEASED; urgency=low",
+            f"cfbuild-{pkg_name.lower()} ({pkg_version}) UNRELEASED; urgency=low",
             file=f,
         )
-        print("\n", file=f)  # Two newlines
+        print("", file=f)  # Extra newline
+        print("  * Initial release.", file=f)
+        print("", file=f)  # Extra newline
         print(f" -- CFEngine Packager <cfengine@northern.tech>  {now}", file=f)
 
-    log.info(f"Created changelog file '{changelog}'")
+    log.info(f"Created changelog file '{changelog_file}'")
 
     # The above should produce the same output as the following command.
-    f"debchange --create --package {pkg_name} --newversion {pkg_version}-1 --urgency low --empty"
+    f"debchange --create --package {pkg_name} --newversion {pkg_version} --urgency low --empty"
     # Check out `man debchange`` for more info.
 
 
@@ -63,9 +69,9 @@ def create_debian_control(pkg_name: str, pkg_version: str):
 
     target_dir = get_target_dir(pkg_name, pkg_version)
     debian_dir = get_debian_dir(target_dir)
-    control = os.path.join(debian_dir, "control")
+    control_file = os.path.join(debian_dir, "control")
 
-    with open(control, "w") as f:
+    with open(control_file, "w") as f:
         #########################################
         # Source package stanza
         #########################################
@@ -86,7 +92,7 @@ def create_debian_control(pkg_name: str, pkg_version: str):
         # They might or might not be needed to actually use the package.
         print("Build-Depends: debhelper-compat (= 13)", file=f)
 
-        print(file=f)  # Double newline
+        print(file=f)  # Extra newline
 
         #########################################
         # Binary package stanza
@@ -109,7 +115,7 @@ def create_debian_control(pkg_name: str, pkg_version: str):
         print(f"Description: CFEngine Build Automation -- {pkg_name}", file=f)
         print(f" CFEngine Build Automation -- {pkg_name}", file=f)
 
-        print(file=f)  # Double newline
+        print(file=f)  # Extra newline
 
         #########################################
         # Developer binary package stanza
@@ -124,33 +130,72 @@ def create_debian_control(pkg_name: str, pkg_version: str):
         )
         print(f" CFEngine Build Automation -- {pkg_name} -- development files", file=f)
 
-    log.info(f"Created control file '{control}'")
+    log.info(f"Created control file '{control_file}'")
 
 
 def create_debian_copyright(pkg_name: str, pkg_version: str):
+    """It is quite an important file, but for now we will be happy enough with an
+    empty file."""
+
     target_dir = get_target_dir(pkg_name, pkg_version)
     debian_dir = get_debian_dir(target_dir)
-    copyright = os.path.join(debian_dir, "copyright")
+    copyright_file = os.path.join(debian_dir, "copyright")
 
-    # It is quite an important file, but for now we will be happy enough with an
-    # empty file.
-    with open(copyright, "w"):
+    with open(copyright_file, "w"):
         pass
 
-    log.info(f"Created copyright file '{copyright}'")
+    log.info(f"Created copyright file '{copyright_file}'")
 
 
 def create_debian_rules(pkg_name, pkg_version):
     target_dir = get_target_dir(pkg_name, pkg_version)
     debian_dir = get_debian_dir(target_dir)
-    rules = os.path.join(debian_dir, "rules")
+    rules_file = os.path.join(debian_dir, "rules")
 
-    with open(rules, "w") as f:
+    with open(rules_file, "w") as f:
         print("#!/usr/bin/make -f", file=f)
         print("%:", file=f)
         print("\tdh $@", file=f)
 
-    log.info(f"Created rules file '{rules}'")
+    log.info(f"Created rules file '{rules_file}'")
+
+
+def create_debian_format(pkg_name, pkg_version):
+    """The final file we need is debian/source/format, and it should contain the
+    version number for the format of the source package, which is "3.0 (quilt)".
+    """
+
+    target_dir = get_target_dir(pkg_name, pkg_version)
+    debian_dir = get_debian_dir(target_dir)
+    format_dir = os.path.join(debian_dir, "source")
+    format_file = os.path.join(format_dir, "format")
+
+    log.debug(f"Creating directory '{format_dir}'")
+    os.mkdir(format_dir)
+
+    with open(format_file, "w") as f:
+        print("3.0 (quilt)", file=f)
+
+    log.info(f"Created format file '{format_file}'")
+
+
+def build_debian_package(pkg_name, pkg_version):
+    target_dir = get_target_dir(pkg_name, pkg_version)
+    sources_dir = get_sources_dir()
+    log_file = os.path.join(sources_dir, f"cfbuild-{pkg_name}-debuild.log")
+
+    log.info(
+        f"Patience my friend: Building debian package for target '{target_dir}' ..."
+    )
+    with open(log_file, "w") as f:
+        res = subprocess.run(
+            ["debuild", "-us", "-uc"], cwd=target_dir, stdout=f, stderr=f
+        )
+    if res.returncode != 0:
+        log.error(
+            f"Failed to build package for target '{target_dir}': See '{log_file}' for logs"
+        )
+        exit(1)
 
 
 def prepare_debian_dir(pkg_name, pkg_version):
@@ -167,3 +212,5 @@ def prepare_debian_dir(pkg_name, pkg_version):
     create_debian_control(pkg_name, pkg_version)
     create_debian_copyright(pkg_name, pkg_version)
     create_debian_rules(pkg_name, pkg_version)
+    create_debian_format(pkg_name, pkg_version)
+    build_debian_package(pkg_name, pkg_version)
