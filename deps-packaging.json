@@ -48,106 +48,68 @@
         "tarball": "yaml-0.2.5.tar.gz",
         "checksum": "c642ae9b75fee120b2d96c712538bd2cf283228d2337df2cf2988e3c02678ef4"
     },
-    "lmdb": {
+    "LMDB": {
         "version": "0.9.33",
         "source": "https://git.openldap.org/openldap/openldap/-/archive/LMDB_0.9.33/",
         "tarball": "openldap-LMDB_0.9.33.tar.gz",
         "checksum": "476801f5239c88c7de61c3390502a5d13965ecedef80105b5fb0fcb8373d1e53"
     },
-    "openldap": {
+    "OpenLDAP": {
         "version": "2.6.9",
         "source": "https://openldap.org/software/download/OpenLDAP/openldap-release/",
         "tarball": "openldap-2.6.9.tgz",
         "checksum": "2cb7dc73e9c8340dff0d99357fbaa578abf30cc6619f0521972c555681e6b2ff",
         "expression": "enterprise and agent"
     },
-    "openssl": {
+    "OpenSSL": {
         "version": "3.4.0",
         "source": "https://github.com/openssl/openssl/releases/download/openssl-3.4.0/",
         "tarball": "openssl-3.4.0.tar.gz",
         "checksum": "e15dda82fe2fe8139dc2ac21a36d4ca01d5313c75f99f46c4e8a27709b7294bf"
     },
-    "pcre2": {
+    "PCRE2": {
         "version": "10.44",
         "source": "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.44/",
         "tarball": "pcre2-10.44.tar.gz",
-        "checksum": "86b9cb0aa3bcb7994faa88018292bc704cdbb708e785f7c74352ff6ea7d3175b"
-    },
-    "pthreads-w32": {
-        "version": "2-9-1",
-        "source": "ftp://sourceware.org/pub/pthreads-win32/",
-        "tarball": "pthreads-w32-2-9-1-release.tar.gz",
         "checksum": "e6aca7aea8de33d9c8580bcb3a0ea3ec0a7ace4ba3f4e263ac7c7b66bc95fb4d",
         "expression": "windows and enterprise and agent"
     },
-    "sasl2": {
+    "SASL2": {
         "version": "2.1.28",
         "source": "https://github.com/cyrusimap/cyrus-sasl/releases/download/cyrus-sasl-2.1.28/",
         "tarball": "cyrus-sasl-2.1.28.tar.gz",
-        "checksum": "7ccfc6abd01ed67c1a0924b353e526f1b766b21f42d4562ee635a8ebfc5bb38c"
-    },
-    "zlib": {
-        "version": "1.3.1",
-        "source": "https://zlib.net/fossils/",
-        "tarball": "zlib-1.3.1.tar.gz",
-        "checksum": "9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23"
-    },
-    "librsync": {
-        "version": "2.3.4",
-        "source": "https://github.com/librsync/librsync/releases/download/v2.3.4/",
-        "tarball": "librsync-2.3.4.tar.gz",
-        "checksum": "a0dedf9fff66d8e29e7c25d23c1f42beda2089fb4eac1b36e6acd8a29edfbd1f"
-    },
-    "leech": {
-        "version": "0.1.22",
-        "source": "https://github.com/larsewi/leech/releases/download/v0.1.22/",
-        "tarball": "leech-0.1.22.tar.gz",
         "checksum": "175358b13210ae39bf9a23db22397c3107d85646059130f3ffb266af0537b3f4",
         "expression": "enterprise"
     },
-    "apache": {
+    "Apache": {
         "version": "2.4.62",
         "source": "http://archive.apache.org/dist/httpd/",
         "tarball": "httpd-2.4.62.tar.gz",
         "checksum": "3e2404d762a2da03560d7ada379ba1599d32f04a0d70ad6ff86f44325f2f062d",
         "expression": "enterprise and hub"
     },
-    "apr": {
+    "APR": {
         "version": "1.7.5",
         "source": "http://archive.apache.org/dist/apr/",
         "tarball": "apr-1.7.5.tar.gz",
-        "checksum": "3375fa365d67bcf945e52b52cba07abea57ef530f40b281ffbe977a9251361db",
-        "expression": "enterprise and hub"
-    },
-    "apr-util": {
-        "version": "1.6.3",
-        "source": "http://archive.apache.org/dist/apr/",
-        "tarball": "apr-util-1.6.3.tar.gz",
         "checksum": "2b74d8932703826862ca305b094eef2983c27b39d5c9414442e9976a9acf1983",
         "expression": "enterprise and hub"
     },
-    "git": {
+    "Git": {
         "version": "2.47.1",
         "source": "https://www.kernel.org/pub/software/scm/git/",
         "tarball": "git-2.47.1.tar.gz",
-        "checksum": "f4c4e98667800585d218dfdf415eb72f73baa7abcac4569e2ce497970f8d6665",
-        "expression": "enterprise and hub"
-    },
-    "libexpat": {
-        "version": "2.6.3",
-        "source": "https://github.com/libexpat/libexpat/releases/download/R_2_6_3/",
-        "tarball": "expat-2.6.3.tar.xz",
         "checksum": "274db254a6979bde5aad404763a704956940e465843f2a9bd9ed7af22e2c0efc",
         "expression": "enterprise and hub"
     },
-    "php": {
+    "PHP": {
         "version": "8.3.15",
         "source": "https://www.php.net/distributions/",
         "tarball": "php-8.3.15.tar.gz",
         "checksum": "67073c3c9c56c86461e0715d9e1806af5ddffe8e6e2eb9781f7923bbb5bd67fa",
         "expression": "enterprise and hub"
     },
-    "postgresql": {
+    "PostgreSQL": {
         "version": "17.2",
         "source": "https://ftp.postgresql.org/pub/source/v17.2/",
         "tarball": "postgresql-17.2.tar.bz2",
