@@ -4,7 +4,8 @@ import hashlib
 import tarfile
 import urllib.request
 import logging as log
-from utils import get_cache_dir, get_source_dir
+
+from hackaton.utils import get_cache_dir, get_source_dir
 
 
 def get_tarballs_dir():

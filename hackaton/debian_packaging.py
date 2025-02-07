@@ -1,7 +1,8 @@
 import os
 import logging as log
 import subprocess
-from utils import get_source_dir
+
+from hackaton.utils import get_source_dir
 
 
 def get_debian_dir(target):
