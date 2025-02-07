@@ -5,7 +5,7 @@ import tarfile
 import urllib.request
 import logging as log
 
-from hackaton.utils import get_cache_dir, get_source_dir
+from hackaton.utils import get_cache_dir
 
 
 def get_tarballs_dir():
@@ -23,11 +23,11 @@ def fetch_tarball(url, tarball):
 
     if os.path.exists(tarball_path):
         log.debug(
-            f"Skipping fetching url '{url}': Tarball '{tarball_path}' already exists"
+            f"Skipping fetching URL '{url}' to '{tarball_path}': Tarball already exists"
         )
         return
 
-    log.info(f"Fetching {tarball_path}: Url '{url}'")
+    log.info(f"Fetching URL '{url}' to '{tarball_path}'")
     urllib.request.urlretrieve(url, tarball_path)
 
 
@@ -48,21 +48,20 @@ def verify_tarball(tarball, checksum):
         exit(1)
 
 
-def extract_tarball(tarball: str, target: str):
+def extract_tarball(tarball: str, target_dir: str):
     tarball_path = get_tarball_path(tarball)
-    source_dir = get_source_dir(target)
 
-    if os.path.exists(source_dir):
+    if os.path.exists(target_dir):
         log.debug(
-            f"Skipping extracting tarball '{tarball_path}': Source directory '{source_dir}' already exists"
+            f"Skipping extracting tarball '{tarball_path}' to source directory '{target_dir}': Target already exists"
         )
         return
 
-    log.info(f"Extracting tarball '{tarball_path}' to source directory '{source_dir}'")
+    log.info(f"Extracting tarball '{tarball_path}' to source directory '{target_dir}'")
     with tarfile.open(tarball_path) as f:
         members = f.getmembers()
         prefix = os.path.commonprefix([m.name for m in members])
 
         for member in f.getmembers():
             member.name = member.name[len(prefix) :].lstrip(os.sep)
-            f.extract(member, source_dir)
+            f.extract(member, target_dir)

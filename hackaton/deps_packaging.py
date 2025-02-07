@@ -9,7 +9,7 @@ from hackaton.tarballs import (
     extract_tarball,
     verify_tarball,
 )
-from hackaton.debian_packaging import prepare_debian_dir, create_debian_changelog
+from hackaton.debian_packaging import prepare_debian_dir, get_target_dir
 
 
 def package_dependencies(ctx):
@@ -43,9 +43,8 @@ def package_dependencies(ctx):
         checksum = pkg_info["checksum"]
         verify_tarball(tarball, checksum)
 
-        target = f'{pkg_name}_{pkg_info["version"]}'
-        extract_tarball(tarball, target)
+        pkg_version = pkg_info["version"]
+        target_dir = get_target_dir(pkg_name, pkg_version)
+        extract_tarball(tarball, target_dir)
 
-        prepare_debian_dir(target)
-
-        create_debian_changelog(target, pkg_name, pkg_info)
+        prepare_debian_dir(pkg_name, pkg_version)
