@@ -145,6 +145,13 @@ def create_debian_rules(pkg_name, pkg_version):
     debian_dir = get_debian_dir(target_dir)
     rules = os.path.join(debian_dir, "rules")
 
+    with open(rules, "w") as f:
+        print("#!/usr/bin/make -f", file=f)
+        print("%:", file=f)
+        print("\tdh $@", file=f)
+
+    log.info(f"Created rules file '{rules}'")
+
 
 def prepare_debian_dir(pkg_name, pkg_version):
     target_dir = get_target_dir(pkg_name, pkg_version)
@@ -159,3 +166,4 @@ def prepare_debian_dir(pkg_name, pkg_version):
     create_debian_changelog(pkg_name, pkg_version)
     create_debian_control(pkg_name, pkg_version)
     create_debian_copyright(pkg_name, pkg_version)
+    create_debian_rules(pkg_name, pkg_version)
