@@ -42,7 +42,10 @@ def create_debian_changelog(pkg_name: str, pkg_version: str):
     now = dt.now().astimezone().strftime("%a, %d %b %Y %H:%M:%S %z")
 
     with open(changelog, "w") as f:
-        print(f"cfbuild-{pkg_name.lower()} ({pkg_version}-1) UNRELEASED; urgency=low", file=f)
+        print(
+            f"cfbuild-{pkg_name.lower()} ({pkg_version}-1) UNRELEASED; urgency=low",
+            file=f,
+        )
         print("\n", file=f)  # Two newlines
         print(f" -- CFEngine Packager <cfengine@northern.tech>  {now}", file=f)
 
@@ -51,6 +54,7 @@ def create_debian_changelog(pkg_name: str, pkg_version: str):
     # The above should produce the same output as the following command.
     f"debchange --create --package {pkg_name} --newversion {pkg_version}-1 --urgency low --empty"
     # Check out `man debchange`` for more info.
+
 
 def create_debian_control(pkg_name: str, pkg_version: str):
     """The control file describes the source and binary package, and gives some
@@ -82,7 +86,7 @@ def create_debian_control(pkg_name: str, pkg_version: str):
         # They might or might not be needed to actually use the package.
         print("Build-Depends: debhelper-compat (= 13)", file=f)
 
-        print(file=f) # Double newline
+        print(file=f)  # Double newline
 
         #########################################
         # Binary package stanza
@@ -105,7 +109,7 @@ def create_debian_control(pkg_name: str, pkg_version: str):
         print(f"Description: CFEngine Build Automation -- {pkg_name}", file=f)
         print(f" CFEngine Build Automation -- {pkg_name}", file=f)
 
-        print(file=f) # Double newline
+        print(file=f)  # Double newline
 
         #########################################
         # Developer binary package stanza
@@ -114,10 +118,14 @@ def create_debian_control(pkg_name: str, pkg_version: str):
         print(f"Package: cfbuild-{pkg_name.lower()}-devel", file=f)
         print("Section: libdevel", file=f)
         print("Architecture: any", file=f)
-        print(f"Description: CFEngine Build Automation -- {pkg_name} -- development files", file=f)
+        print(
+            f"Description: CFEngine Build Automation -- {pkg_name} -- development files",
+            file=f,
+        )
         print(f" CFEngine Build Automation -- {pkg_name} -- development files", file=f)
 
     log.info(f"Created control file '{control}'")
+
 
 def create_debian_copyright(pkg_name: str, pkg_version: str):
     target_dir = get_target_dir(pkg_name, pkg_version)
@@ -130,6 +138,7 @@ def create_debian_copyright(pkg_name: str, pkg_version: str):
         pass
 
     log.info(f"Created copyright file '{copyright}'")
+
 
 def create_debian_rules(pkg_name, pkg_version):
     target_dir = get_target_dir(pkg_name, pkg_version)
