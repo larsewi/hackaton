@@ -125,7 +125,8 @@ def create_debian_copyright(pkg_name: str, pkg_version: str):
     debian_dir = get_debian_dir(target_dir)
     copyright_file = os.path.join(debian_dir, "copyright")
 
-    with open(copyright_file, "w"):
+    with open(copyright_file, "w") as f:
+        f.write(f"Check upstream package {pkg_name}")
         pass
 
     log.info(f"Created copyright file '{copyright_file}'")
