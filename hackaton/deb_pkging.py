@@ -37,7 +37,9 @@ def create_debian_changelog(pkg_name: str, pkg_version: str):
     list everything that has changed in upstream code, but a summary is helpful
     for others. We will not log anything, because we are lazy. However, we still
     need to make a changelog entry, because the packaging tools read information
-    from the changelog: most importantly, the package version."""
+    from the changelog: most importantly, the package version. For more
+    information on changelog, see
+    https://www.debian.org/doc/debian-policy/ch-controlfields.html"""
 
     target_dir = get_target_dir(pkg_name, pkg_version)
     debian_dir = get_debian_dir(target_dir)
@@ -57,81 +59,63 @@ def create_debian_changelog(pkg_name: str, pkg_version: str):
 
     log.info(f"Created changelog file '{changelog_file}'")
 
-    # The above should produce the same output as the following command.
-    f"debchange --create --package {pkg_name} --newversion {pkg_version} --urgency low --empty"
-    # Check out `man debchange`` for more info.
-
 
 def create_debian_control(pkg_name: str, pkg_version: str):
     """The control file describes the source and binary package, and gives some
     information about them, such as their names, who the package maintainer is,
-    and so on."""
+    and so on. See
+    https://www.debian.org/doc/debian-policy/ch-controlfields.html for more
+    information"""
 
     target_dir = get_target_dir(pkg_name, pkg_version)
     debian_dir = get_debian_dir(target_dir)
     control_file = os.path.join(debian_dir, "control")
 
     with open(control_file, "w") as f:
-        #########################################
         # Source package stanza
-        #########################################
-
-        # The source package name
         print(f"Source: cfbuild-{pkg_name.lower()}", file=f)
         print("Section: libs", file=f)
-        # The priority of the package (one of 'required', 'important',
-        # 'standard' or 'optional'). In general, a package is 'optional' unless
-        # it's 'essential' for a standard functioning system, i.e., booting or
-        # networking functionality.
         print("Priority: optional", file=f)
-        # The name and e-mail address of the person responsible for the package.
-        # We will put the blame on Mr. CFEngine Packager.
         print("Maintainer: CFEngine Packager <cfengine@northern.tech>", file=f)
         print("Standards-Version: 4.7.0", file=f)
-        # The list of packages that need to be installed to build the package.
-        # They might or might not be needed to actually use the package.
         print("Build-Depends: debhelper-compat (= 13)", file=f)
 
         print(file=f)  # Extra newline
 
-        #########################################
         # Binary package stanza
-        #########################################
-
-        # The name of the binary package. The name might be different from the
-        # source package name.
         print(f"Package: cfbuild-{pkg_name.lower()}", file=f)
         print("Section: libs", file=f)
-        # Specifies which computer architectures the binary package is expected
-        # to work on. "any" means that the package can be built for any
-        # architecture. "all" means that the same package will work on all
-        # architectures. For example, a package consisting only of shell scripts
-        # would be "all".
         print("Architecture: any", file=f)
-        # The full description of the binary package. It is meant to be helpful
-        # to users. The first line is used as the short synopsis (summary)
-        # description, and the rest of the description must be an independent
-        # longer description of the package.
-        print(f"Description: CFEngine Build Automation -- {pkg_name}", file=f)
+        print(f"Description: CFEngine -- {pkg_name}", file=f)
         print(f" CFEngine Build Automation -- {pkg_name}", file=f)
 
         print(file=f)  # Extra newline
 
-        #########################################
         # Developer binary package stanza
-        #########################################
-
         print(f"Package: cfbuild-{pkg_name.lower()}-devel", file=f)
         print("Section: libdevel", file=f)
         print("Architecture: any", file=f)
-        print(
-            f"Description: CFEngine Build Automation -- {pkg_name} -- development files",
-            file=f,
-        )
+        print(f"Description: CFEngine -- {pkg_name} -- development files", file=f)
         print(f" CFEngine Build Automation -- {pkg_name} -- development files", file=f)
 
     log.info(f"Created control file '{control_file}'")
 
+def create_debian_install(pkg_name: str, pkg_version: str):
+    target_dir = get_target_dir(pkg_name, pkg_version)
+    debian_dir = get_debian_dir(target_dir)
+    install_file = os.path.join(debian_dir, f"cfbuild-{pkg_name.lower()}.install")
+
+    with open(install_file, "w") as f:
+        print(f"/var/cfengine/lib/*", file=f)
+
+def create_debian_devel_install(pkg_name: str, pkg_version: str):
+    target_dir = get_target_dir(pkg_name, pkg_version)
+    debian_dir = get_debian_dir(target_dir)
+    install_file = os.path.join(debian_dir, f"cfbuild-{pkg_name.lower()}-devel.install")
+
+    with open(install_file, "w") as f:
+        print(f"/var/cfengine/lib/*", file=f)
+        print(f"/var/cfengine/include/*", file=f)
 
 def create_debian_copyright(pkg_name: str, pkg_version: str):
     """It is quite an important file, but for now we will be happy enough with an
@@ -156,14 +140,22 @@ def create_debian_rules(pkg_name, pkg_version):
         print("#!/usr/bin/make -f", file=f)
         print("%:", file=f)
         print("\tdh $@", file=f)
+        print(file=f)
+
+        print("override_dh_auto_configure:", file=f)
+        print("\tdh_auto_configure -- --prefix=/var/cfengine --libdir=/var/cfengine/lib --enable-shared --disable-static", file=f)
+        print(file=f)
+
+        print("override_dh_auto_install:", file=f)
+        print("\tdh_auto_install", file=f)
+        print("\trm -f debian/tmp/var/cfengine/lib/*.la", file=f)
 
     log.info(f"Created rules file '{rules_file}'")
 
 
 def create_debian_format(pkg_name, pkg_version):
-    """The final file we need is debian/source/format, and it should contain the
-    version number for the format of the source package, which is "3.0 (quilt)".
-    """
+    """The purpose of the source format file in Debian is to specify the format
+    of a package and how it should be built."""
 
     target_dir = get_target_dir(pkg_name, pkg_version)
     debian_dir = get_debian_dir(target_dir)
@@ -189,7 +181,7 @@ def build_debian_package(pkg_name, pkg_version):
     )
     with open(log_file, "w") as f:
         res = subprocess.run(
-            ["debuild", "-us", "-uc"], cwd=target_dir, stdout=subprocess.DEVNULL, stderr=f
+            ["debuild", "-b", "-us", "-uc", "-rfakeroot"], cwd=target_dir, stdout=subprocess.DEVNULL, stderr=f
         )
     if res.returncode != 0:
         exit(1)
@@ -210,4 +202,6 @@ def prepare_debian_dir(pkg_name, pkg_version):
     create_debian_copyright(pkg_name, pkg_version)
     create_debian_rules(pkg_name, pkg_version)
     create_debian_format(pkg_name, pkg_version)
+    create_debian_install(pkg_name, pkg_version)
+    create_debian_devel_install(pkg_name, pkg_version)
     build_debian_package(pkg_name, pkg_version)
